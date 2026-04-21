@@ -1,6 +1,8 @@
-function App(){
-  return <>
-  </>
-}
+import AuthScreen from "./pages/AuthScreen.tsx";
 
-export default App;
+
+export default function App() {
+  return (
+      <AuthScreen></AuthScreen>
+  );
+}
