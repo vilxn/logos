@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authApi } from "@/api/authApi";
 
 const AuthScreen: React.FC = () => {
     const navigate = useNavigate();
@@ -8,16 +9,12 @@ const AuthScreen: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault();
 
         if (isLogin) {
-
-            const role = localStorage.getItem("role");
-
-            if (role === "parent") navigate("/parent");
-            else if (role === "specialist") navigate("/specialist");
-            else navigate("/choose-role");
+            await authApi.login({ email, password });
+            navigate("/parent")
         } else {
             navigate("/choose-role");
         }
