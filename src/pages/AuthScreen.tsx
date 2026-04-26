@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthScreen: React.FC = () => {
+    const navigate = useNavigate();
+
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -8,12 +11,16 @@ const AuthScreen: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (isLogin) {
 
-        console.log({
-            mode: isLogin ? "Login" : "Register",
-            email,
-            password,
-        });
+            const role = localStorage.getItem("role");
+
+            if (role === "parent") navigate("/parent");
+            else if (role === "specialist") navigate("/specialist");
+            else navigate("/choose-role");
+        } else {
+            navigate("/choose-role");
+        }
     };
 
     return (
