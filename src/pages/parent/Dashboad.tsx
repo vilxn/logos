@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import { Plus, Trash2, Save } from "lucide-react"
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import s from "./Dashboard.module.css";
+import { authApi } from "@/api/authApi";
 type Child = {
     id: string
     name: string
@@ -13,12 +14,13 @@ type Child = {
 
 export default function Dashboad() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [parent, setParent] = useState({
         firstName: "",
         lastName: "",
         relation: "",
     })
-
+    const { email, password, role } = location.state;
     const [childrenList, setChildrenList] = useState<Child[]>([
         {
             id: crypto.randomUUID(),
@@ -110,6 +112,13 @@ export default function Dashboad() {
 
         setError(null)
         setLoading(true)
+        await authApi.register({
+            email,
+            password,
+            role,
+            firstname: parent.firstName.trim(),
+            lastname: parent.lastName.trim(),
+          });
         navigate("/parent");
 
         /*try {

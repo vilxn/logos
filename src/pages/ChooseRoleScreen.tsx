@@ -1,8 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 
 const ChooseRoleScreen: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleChooseRole = (role: "specialist" | "parent") => {
         // Save role locally or send to backend
@@ -10,7 +11,7 @@ const ChooseRoleScreen: React.FC = () => {
 
         // Redirect after choosing
         if(role === "parent") {
-            navigate("/dashboard");
+            navigate("/dashboard", { state: {...location.state, role}});
         }
         if(role === "specialist") {
             navigate("/parent");

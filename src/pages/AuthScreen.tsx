@@ -16,9 +16,9 @@ const AuthScreen: React.FC = () => {
             await authApi.login({ email, password });
             navigate("/parent")
         } else {
-            navigate("/choose-role");
+            navigate("/choose-role", { state: { email, password } });
         }
-    };
+    }; 
 
     return (
         <div style={styles.container}>
